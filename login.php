@@ -36,18 +36,26 @@
         
         $sql = "select * from registration where username='$usernameLogin'";
 
-        
         $result = mysqli_query($conn, $sql);
 
         $fila = mysqli_fetch_assoc($result);
+        $passwordhash = "";
 
-        $passwordhash = $fila['password'];
+        if(empty($usernameLogin)){
+            echo"You must introduce a username <br>";
+        }
+        
+        if(empty($passwordLogin)){
+            echo"You must introduce a password <br>";
+        }else{
+            $passwordhash = $fila['password'];
+        }
+        
         if(password_verify($passwordLogin, $passwordhash)){
             $_SESSION['logged'] = true;
             header("Location: logged-area.php");
         }else{
             $_SESSION['logged'] = false;
-            echo"wrong";
         }
     }
 
